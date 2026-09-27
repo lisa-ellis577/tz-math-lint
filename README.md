@@ -72,6 +72,16 @@ scheduler.go:6:10: warning: 24 * time.Hour assumes every day is 24 hours; use Ad
 billing.go:14:2: error: time.LoadLocation error is discarded; a missing or misspelled zone name fails silently instead of returning an error [ignored-loadlocation-error]
 ```
 
+Arguments can also be a directory, walked recursively for `*.go`
+files (skipping `vendor` and hidden directories like `.git`), or a
+glob pattern understood by `filepath.Glob` (no `**`, but `*` and `?`
+work as usual):
+
+```
+go run ./cmd/tzlint ./internal
+go run ./cmd/tzlint 'pkg/*/*.go'
+```
+
 The command exits nonzero if any finding is severity `error`.
 
 ## Design
@@ -87,8 +97,8 @@ nothing but a string literal, no fixtures or temp files required.
 
 ## Status
 
-Early skeleton: three rules, no configuration, one file per CLI
-invocation. See the issue tracker for what's next.
+Early skeleton: three rules, no configuration, no output mode besides
+plain text. See the issue tracker for what's next.
 
 ## License
 
